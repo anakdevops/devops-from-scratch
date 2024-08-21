@@ -15,7 +15,7 @@ ssh serverdevops@10.0.0.3
 ```
 su serverdevops
 cd /home/serverdevops/
-cat /home/serverdevops/cluster.yml
+nano cluster.yml
 rke up --config cluster.yml
 INFO[0176] Finished building Kubernetes cluster successfully
 export KUBECONFIG=$HOME/kube_config_cluster.yml

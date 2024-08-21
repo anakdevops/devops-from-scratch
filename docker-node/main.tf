@@ -21,13 +21,13 @@ resource "tls_private_key" "ssh_key" {
 # Save the private key to a local file
 resource "local_file" "private_key" {
   content  = tls_private_key.ssh_key.private_key_pem
-  filename = "nginx-key.pem"
+  filename = "docker-key.pem"
 }
 
 # Create VM Instances for Rancher Kubernetes Cluster
 resource "google_compute_instance" "vm_instance" {
   count        = 1
-  name         = "node-nginx-${count.index + 1}"
+  name         = "node-docker-${count.index + 1}"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
 
@@ -46,7 +46,7 @@ resource "google_compute_instance" "vm_instance" {
 
   
   metadata = {
-    ssh-keys = "nginx:${tls_private_key.ssh_key.public_key_openssh}"
+    ssh-keys = "docker:${tls_private_key.ssh_key.public_key_openssh}"
   }
 
   provisioner "file" {
@@ -55,7 +55,7 @@ resource "google_compute_instance" "vm_instance" {
 
     connection {
       type        = "ssh"
-      user        = "nginx"
+      user        = "docker"
       private_key = tls_private_key.ssh_key.private_key_pem
       host        = self.network_interface[0].access_config[0].nat_ip
     }
@@ -69,7 +69,7 @@ resource "google_compute_instance" "vm_instance" {
 
     connection {
       type        = "ssh"
-      user        = "nginx"
+      user        = "docker"
       private_key = tls_private_key.ssh_key.private_key_pem
       host        = self.network_interface[0].access_config[0].nat_ip
     }
