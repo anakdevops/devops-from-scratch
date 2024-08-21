@@ -88,7 +88,7 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
 
-  tags = ["ssh-access"]
+  tags = ["rancher-server", "ssh-access", "https-server", "http-server", "allow-gitlab"]
 }
 
 
