@@ -26,7 +26,7 @@ resource "local_file" "private_key" {
 
 # Create VM Instances for Rancher Kubernetes Cluster
 resource "google_compute_instance" "vm_instance" {
-  count        = 3
+  count        = 2
   name         = "rancher-node-${count.index + 1}"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
@@ -49,10 +49,23 @@ resource "google_compute_instance" "vm_instance" {
     ssh-keys = "rancher:${tls_private_key.ssh_key.public_key_openssh}"
   }
 
+    provisioner "file" {
+    source      = "install.yaml"
+    destination = "/tmp/install.yaml"
+
+    connection {
+      type        = "ssh"
+      user        = "nginx"
+      private_key = tls_private_key.ssh_key.private_key_pem
+      host        = self.network_interface[0].access_config[0].nat_ip
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
-      "sudo apt-get install -y curl git ansible"
+      "sudo apt-get install -y curl git ansible",
+      "ansible-playbook /tmp/install.yaml"
     ]
 
     connection {

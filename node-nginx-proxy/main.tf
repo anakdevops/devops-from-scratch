@@ -28,7 +28,7 @@ resource "local_file" "private_key" {
 resource "google_compute_instance" "vm_instance" {
   count        = 1
   name         = "node-nginx-${count.index + 1}"
-  machine_type = "n2-standard-2"
+  machine_type = "e2-medium"
   zone         = "us-central1-a"
 
   boot_disk {
