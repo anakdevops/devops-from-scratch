@@ -1,0 +1,12 @@
+# Ignore all .json files
+*.json
+
+# Ignore all .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Ignore Terraform plan files
+*.tfplan
+
+# Ignore local Terraform environment files
+.terraform/
