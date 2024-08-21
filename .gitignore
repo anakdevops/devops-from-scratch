@@ -10,3 +10,6 @@
 
 # Ignore local Terraform environment files
 .terraform/
+
+# Ignore all .pem files
+*.pem
