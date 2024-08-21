@@ -1,6 +1,5 @@
 ```
-ssh -i file.pem terraform@34.42.195.47
-ssh -i file.pem terraform@35.193.43.170
+pastikan ssh ke semua server
 sudo su
 cat /home/serverdevops/cluster.yml
 ```
