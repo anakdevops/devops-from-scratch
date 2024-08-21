@@ -55,7 +55,7 @@ resource "google_compute_instance" "vm_instance" {
 
     connection {
       type        = "ssh"
-      user        = "nginx"
+      user        = "rancher"
       private_key = tls_private_key.ssh_key.private_key_pem
       host        = self.network_interface[0].access_config[0].nat_ip
     }
@@ -65,7 +65,7 @@ resource "google_compute_instance" "vm_instance" {
     inline = [
       "sudo apt-get update",
       "sudo apt-get install -y curl git ansible",
-      "ansible-playbook /tmp/install.yaml"
+      "sudo ansible-playbook /tmp/install.yaml"
     ]
 
     connection {
@@ -76,7 +76,7 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
 
-  tags = ["rancher-node", "ssh-access"]
+  tags = ["rancher-server", "ssh-access"]
 }
 
 
