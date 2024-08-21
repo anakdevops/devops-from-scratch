@@ -1,12 +1,6 @@
 ```
-terraform init
-terraform plan
-terraform apply -auto-approve
-```
-
-```
-ssh -i terraform-key.pem terraform@34.42.195.47
-ssh -i terraform-key.pem terraform@35.193.43.170
+ssh -i file.pem terraform@34.42.195.47
+ssh -i file.pem terraform@35.193.43.170
 sudo su
 cat /home/serverdevops/cluster.yml
 ```
