@@ -1,0 +1,16 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:17.0.6-ce.0
+    container_name: gitlab
+    hostname: 'localhost'  # Use a placeholder domain
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost'  # Set the external URL without HTTPS
+        gitlab_rails['gitlab_shell_ssh_port'] = 223
+    ports:
+      - '8080:80'  # Expose GitLab on port 80
+      - '223:22'  # SSH port
+    volumes:
+      - ./config:/etc/gitlab
+      - ./logs:/var/log/gitlab
+      - ./data:/var/opt/gitlab

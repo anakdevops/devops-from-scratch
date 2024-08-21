@@ -61,10 +61,23 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
 
+    provisioner "file" {
+    source      = "docker-compose.yml"
+    destination = "/tmp/docker-compose.yml"
+
+    connection {
+      type        = "ssh"
+      user        = "docker"
+      private_key = tls_private_key.ssh_key.private_key_pem
+      host        = self.network_interface[0].access_config[0].nat_ip
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/install_docker_compose.sh",
-      "sudo /tmp/install_docker_compose.sh"
+      "sudo /tmp/install_docker_compose.sh",
+      "cd /tmp && docker compose up -d"
     ]
 
     connection {

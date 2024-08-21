@@ -46,6 +46,20 @@ resource "google_compute_firewall" "allow_ssh" {
   target_tags   = ["ssh-access"]
 }
 
+# Firewall Rule untuk Akses gitlab
+resource "google_compute_firewall" "allow_gitlab" {
+  name    = "allow-gitlab"
+  network = google_compute_network.vpc_network.id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8080"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["allow-gitlab"]
+}
+
 # Firewall Rule untuk NodePort
 resource "google_compute_firewall" "allow_nodeport" {
   name    = "allow-nodeport"
