@@ -11,6 +11,6 @@ services:
       - '8080:80'  # Expose GitLab on port 80
       - '223:22'  # SSH port
     volumes:
-      - ./config:/etc/gitlab
-      - ./logs:/var/log/gitlab
-      - ./data:/var/opt/gitlab
+      - ./config-gitlab:/etc/gitlab
+      - ./logs-gitlab:/var/log/gitlab
+      - ./data-gitlab:/var/opt/gitlab
