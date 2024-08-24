@@ -91,6 +91,7 @@ resource "google_compute_instance" "vm_instance" {
       "sudo apt-get install -y curl git ansible",
       "sudo ansible-playbook /tmp/install.yaml",
       "cd /tmp",
+      "sudo chmod 777 -R /home/docker/jenkins_compose/",
       "docker compose up -d"
     ]
 
