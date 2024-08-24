@@ -69,3 +69,4 @@ rke up --config cluster.yml
 ```
 
 ![image](../nodes.png)
+![image](../pods.png)
