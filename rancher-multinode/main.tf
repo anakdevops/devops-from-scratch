@@ -12,6 +12,14 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+data "terraform_remote_state" "bucket" {
+  backend = "local"
+
+  config = {
+    path = "../bucket/terraform.tfstate"
+  }
+}
+
 # Generate SSH Key Pair
 resource "tls_private_key" "ssh_key" {
   algorithm = "RSA"
@@ -28,6 +36,8 @@ resource "local_file" "private_key" {
 locals {
   zones = ["us-central1-a", "us-central1-b", "us-central1-c", "us-central1-f"]
 }
+
+
 
 # Create VM Instances for Rancher Kubernetes Cluster
 resource "google_compute_instance" "vm_instance" {
@@ -71,8 +81,18 @@ resource "google_compute_instance" "vm_instance" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
-      "sudo apt-get install -y curl git ansible",
-      "sudo ansible-playbook /tmp/install.yaml"
+      "sudo apt-get install -y curl git ansible gnupg ca-certificates",
+      "echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main' | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list",
+      "curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.gpg",
+      "sudo apt-get update",
+      "sudo apt-get install -y gcsfuse",
+      "sudo mkdir -p /mnt/bucket",
+      "echo 'gcsfuse#${data.terraform_remote_state.bucket.outputs.bucket_name} /mnt/bucket fuse rw,allow_other,default_permissions 0 0' | sudo tee -a /etc/fstab",
+      "echo '[Unit]\nDescription=Mount GCS Bucket\nAfter=network-online.target\n\n[Service]\nExecStart=/usr/bin/gcsfuse ${data.terraform_remote_state.bucket.outputs.bucket_name} /mnt/bucket\nExecStop=/bin/fusermount -u /mnt/bucket\nType=forking\n\n[Install]\nWantedBy=multi-user.target' | sudo tee /etc/systemd/system/gcsfuse.service",
+      "sudo systemctl daemon-reload",
+      "sudo systemctl enable gcsfuse",
+      "sudo systemctl start gcsfuse"
+     
     ]
 
     connection {
