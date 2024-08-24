@@ -64,6 +64,8 @@ ssh serverdevops@10.0.0.2
 ssh serverdevops@10.0.0.3
 rke config --list-version --all #cek kubernetes version
 cd /home/serverdevops/
-nano cluster.yml
-rke up --config cluster.yml #Add IP Node
+nano cluster.yml #Add IP Node
+rke up --config cluster.yml 
 ```
+
+![image](../nodes.png)
