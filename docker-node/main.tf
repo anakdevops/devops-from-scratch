@@ -49,9 +49,9 @@ resource "google_compute_instance" "vm_instance" {
     ssh-keys = "docker:${tls_private_key.ssh_key.public_key_openssh}"
   }
 
-  provisioner "file" {
-    source      = "install_docker_compose.sh"
-    destination = "/tmp/install_docker_compose.sh"
+    provisioner "file" {
+    source      = "install.yaml"
+    destination = "/tmp/install.yaml"
 
     connection {
       type        = "ssh"
@@ -75,7 +75,9 @@ resource "google_compute_instance" "vm_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/install_docker_compose.sh"
+      "sudo apt-get update",
+      "sudo apt-get install -y curl git ansible",
+      "sudo ansible-playbook /tmp/install.yaml"
     ]
 
     connection {
