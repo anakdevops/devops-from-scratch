@@ -6,10 +6,10 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://git.anakdevops.online'  # Set the external URL without HTTPS
-        gitlab_rails['gitlab_shell_ssh_port'] = 223
+        gitlab_rails['gitlab_shell_ssh_port'] = 22
     ports:
       - '8080:80'  # Expose GitLab on port 80
-      - '223:22'  # SSH port
+      - '22:22'  # SSH port
     volumes:
       - ./config-gitlab:/etc/gitlab
       - ./logs-gitlab:/var/log/gitlab
