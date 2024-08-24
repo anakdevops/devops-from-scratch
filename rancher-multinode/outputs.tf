@@ -15,3 +15,11 @@ output "machine_types" {
   }
   description = "The machine types of each Rancher node instance."
 }
+
+# Output the zone of each instance
+output "instance_zones" {
+  value = {
+    for instance in google_compute_instance.vm_instance :
+    instance.name => instance.zone
+  }
+}

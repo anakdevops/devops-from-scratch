@@ -54,7 +54,7 @@ kubectl -n cattle-system get deploy rancher -w
 
 
 
-# Add Node | RKE v1.6.1 | Rancher 2.9 | upgrade Kubernetes v1.29.7 to v1.30.3
+# Add Worker Node | RKE v1.6.1 | Rancher 2.9 | upgrade Kubernetes v1.29.7 to v1.30.3
 
 ```
 ```

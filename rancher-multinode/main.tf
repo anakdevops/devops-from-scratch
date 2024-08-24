@@ -24,13 +24,19 @@ resource "local_file" "private_key" {
   filename = "rancher-key.pem"
 }
 
+# Define a list of zones to choose from
+locals {
+  zones = ["us-central1-a", "us-central1-b", "us-central1-c", "us-central1-f"]
+}
+
 # Create VM Instances for Rancher Kubernetes Cluster
 resource "google_compute_instance" "vm_instance" {
   count        = 2
   name         = "rancher-node-${count.index + 1}"
   # Alternating machine types to balance the distribution
-  machine_type = count.index % 2 == 0 ? "e2-medium" : "n2-standard-4"
-  zone         = "us-central1-a"
+  machine_type = count.index % 2 == 0 ? "n2-standard-4" : "e2-medium"
+  # Balanced selection of zones
+  zone = local.zones[count.index % length(local.zones)]
 
   boot_disk {
     initialize_params {
