@@ -83,7 +83,7 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
 
-  tags = ["rancher-server", "ssh-access", "https-server", "http-server"]
+  tags = ["nodeport-access", "rancher-server", "ssh-access", "https-server", "http-server"]
 }
 
 

@@ -100,7 +100,7 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
 
-  tags = ["rancher-server", "ssh-access", "https-server", "http-server", "allow-gitlab"]
+  tags = ["nodeport-access", "rancher-server", "ssh-access", "https-server", "http-server", "allow-gitlab"]
 }
 
 
