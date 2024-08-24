@@ -75,9 +75,7 @@ resource "google_compute_instance" "vm_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/install_docker_compose.sh",
-      "sudo /tmp/install_docker_compose.sh",
-      "cd /tmp && docker compose up -d"
+      "chmod +x /tmp/install_docker_compose.sh"
     ]
 
     connection {

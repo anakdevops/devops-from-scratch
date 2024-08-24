@@ -1,3 +1,5 @@
+
+
 ```
 instance_internal_ips = [
   "10.0.0.2",
@@ -7,8 +9,12 @@ instance_ips = [
   "34.45.189.254",
   "104.155.187.17",
 ]
+```
+
+# Single Node
+
+```
 ssh -i rancher-multinode/rancher-key.pem rancher@34.45.189.254
-ssh -i rancher-multinode/rancher-key.pem rancher@104.155.187.17
 ```
 
 
@@ -16,15 +22,10 @@ ssh -i rancher-multinode/rancher-key.pem rancher@104.155.187.17
 pastikan ssh ke semua server
 sudo su
 cat /home/serverdevops/cluster.yml
-```
-
-
-```
 su serverdevops
 cat /home/serverdevops/.ssh/id_rsa.pub
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsClf34mY4J+6MP0ncMUlA2qDwZMCIoIDwFZc367e/o7Asct/5dr5e9cXoTswYNgiWp79ELw8m4/FkgM+kNKerp8Sj5DoohdSySfF06EnDHtF2W4/F8QkoMhXr2MXoVZAa2jm59iUHE19/4uX7iw7Wl6WWQNPBTqc84ZZPLPJhbNbb1kPcrXA/qH6jcaszyDI1jErXbpQbAuvJ+e7kgpxKDqdH4Y9gBuRH0H25sS09pN4UCpKe8EUgKPRlm/6WAT2eS42IoCqn+oIosWXTsD0poQTlEx3k4AjbfVsz41xMjjyenToo64cXAu+OBe2Do/UvRS9ND7IZntmMpS6fY4Mb ansible-generated on rancher-node-1" >> ~/.ssh/authorized_keys
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCOrFmFlzQp4bbaTok9CMafB6iMVX71Mv11tsL2F/1GsW0SW4MAMi0SiSnDdkLHbh0RI0pXc+w+3xWTJZNuXpdEIPUrYFWikU+lBrLVnxPoD9Q8SQYCaMghEgrxlktIQhYoQjaZvNDxNNSZoIvCFlEat23Aksh3mLlcAOaDzhjlld1x0BzHu5XEIzve9dEWFhkD4qTOfPu+3FRNyEO10ls21WZQR/6Cidur+Hnx9YW+oUIlaq9GSdg02yfrkOVbjuAjcABY6SmU+/3axGSOycEEXmdW/68ktqKY2LY35V5CE+c90rScnvXT/HOlwyoNrsQUphQcQuIZ58YbXUYVlCmn ansible-generated on rancher-node-2" >> ~/.ssh/authorized_keys
-ssh serverdevops@10.0.0.3
+ssh serverdevops@10.0.0.2
 ```
 
 ```
@@ -51,3 +52,13 @@ kubectl -n cattle-system get deploy rancher -w
 ```
 
 
+# Add Node
+
+```
+ssh -i rancher-multinode/rancher-key.pem rancher@34.45.189.254
+su serverdevops
+cat /home/serverdevops/.ssh/id_rsa.pub
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsClf34mY4J+6MP0ncMUlA2qDwZMCIoIDwFZc367e/o7Asct/5dr5e9cXoTswYNgiWp79ELw8m4/FkgM+kNKerp8Sj5DoohdSySfF06EnDHtF2W4/F8QkoMhXr2MXoVZAa2jm59iUHE19/4uX7iw7Wl6WWQNPBTqc84ZZPLPJhbNbb1kPcrXA/qH6jcaszyDI1jErXbpQbAuvJ+e7kgpxKDqdH4Y9gBuRH0H25sS09pN4UCpKe8EUgKPRlm/6WAT2eS42IoCqn+oIosWXTsD0poQTlEx3k4AjbfVsz41xMjjyenToo64cXAu+OBe2Do/UvRS9ND7IZntmMpS6fY4Mb ansible-generated on rancher-node-1" >> ~/.ssh/authorized_keys
+ssh serverdevops@10.0.0.2
+ssh serverdevops@10.0.0.3
+```
