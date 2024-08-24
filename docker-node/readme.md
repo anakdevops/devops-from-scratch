@@ -11,12 +11,5 @@ ssh -i docker-node/docker-key.pem docker@104.155.187.17
 ```
 
 ```
-sudo su
-cd /tmp
-docker compose up -d  # run gitlab
-mkdir nginxpm
-mv docker-compose.yml.nginpm nginxpm/docker-compose.yml
-cd nginxpm
-docker compose up -d  # run nginx pm
 sudo docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
 ```
