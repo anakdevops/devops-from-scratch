@@ -180,16 +180,12 @@
                 - controlplane
                 - etcd
                 - worker
-            - address: 10.0.0.3
-              user: serverdevops
-              role:
-                - controlplane
-                - etcd
-                - worker
-          network:
-              plugin: canal
-              options:
-                canal_flannel_backend_type: vxlan
+          ingress:
+            provider: nginx
+            options:
+              use-forwarded-headers: "true"
+          
+          kubernetes_version: "v1.29.7-rancher1-1"
     - name: Set owner and group for cluster.yml
       file:
         path: /home/serverdevops/cluster.yml
