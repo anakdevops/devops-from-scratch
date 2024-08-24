@@ -6,15 +6,15 @@ instance_internal_ips = [
   "10.0.0.3",
 ]
 instance_ips = [
-  "34.45.189.254",
+  "34.68.131.157",
   "104.155.187.17",
 ]
 ```
 
-# Single Node | RKE v1.6.1 | Kubernetes v1.29.7
+# Single Node | RKE v1.6.1 | Rancher 2.9 | Kubernetes v1.29.7
 
 ```
-ssh -i rancher-multinode/rancher-key.pem rancher@34.45.189.254
+ssh -i rancher-multinode/rancher-key.pem rancher@34.68.131.157
 ```
 
 
@@ -24,7 +24,7 @@ sudo su
 cat /home/serverdevops/cluster.yml
 su serverdevops
 cat /home/serverdevops/.ssh/id_rsa.pub
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCewf04aXUpEdSrIzv7HzWBSUYFtDZzj4tL6QiDV4fWUjzO8D1NCkxbejkBMlEfPH5jyNxoilvr8HCKMhRDJ23H6flgw8CzcKggFZZSIuVCFKvx0XrLTPnVWH/mMd5g31XrbaT+UVMsz4NA3KsLQdscGu2faafBDR2RnACVBPrj4Jgr7lyddNfBqFIKk0ltjKeJaJSCT/2WxzymrUoHGRWQLicXk6Musg9E63+sZTCHAgkAf1EupPc9XUIwTKOG0Uzm5POmajPM2N5Bvwv8/1NH45jg3+ERG5qav09ar+1TYrcTmpfa9AnIndQ/U5wJ08y1adN1zS+Q86a7ltf800Tl ansible-generated on rancher-node-1" >> ~/.ssh/authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+TaFK4EJQ55wwUCGrQuCvGr5oW40NuIL80sjQE/XZgiNDIoL/Lgn6XOrTGN6n8MhMJd9Q5qNrELV6tSTYdPm82A1Xishq29dkovrRNLohBm2grxRaqM37TtsKDUKPRe0VxPtPL9WyD29xgKWHZFSbpnkmPtdYLcm6f7UOFCEHNYG4Qtf/Cj8J4Ji57BJWCjCLFs9K07WfmnHVZs9lRUrVB03woh2GzkqZvliMjN13nQagPI/sHqj6/VAnmlUDbJvBsnnJvyihSonJQVLZv3VwbN6BrgfOEnGZUdnuaQmYR5z76XG7+EtBe/lOGYGyBe2xZ1YY/MMeqDOBF92Wu2pX ansible-generated on rancher-node-1" >> ~/.ssh/authorized_keys
 ssh serverdevops@10.0.0.2
 ```
 
@@ -54,7 +54,7 @@ kubectl -n cattle-system get deploy rancher -w
 
 
 
-# Add Node | RKE v1.6.1 | upgrade Kubernetes v1.29.7 to v1.30.3
+# Add Node | RKE v1.6.1 | Rancher 2.9 | upgrade Kubernetes v1.29.7 to v1.30.3
 
 ```
 ssh -i rancher-multinode/rancher-key.pem rancher@104.155.187.17
