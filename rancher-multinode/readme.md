@@ -2,19 +2,19 @@
 
 ```
 instance_internal_ips = [
-  "10.0.0.2",
   "10.0.0.3",
+  "10.0.0.2",
 ]
 instance_ips = [
+  "34.45.189.254",
   "34.68.131.157",
-  "104.155.187.17",
 ]
 ```
 
 # Single Node | RKE v1.6.1 | Rancher 2.9 | Kubernetes v1.29.7
 
 ```
-ssh -i rancher-multinode/rancher-key.pem rancher@34.68.131.157
+ssh -i rancher-multinode/rancher-key.pem rancher@34.45.189.254
 ```
 
 
@@ -24,13 +24,13 @@ sudo su
 cat /home/serverdevops/cluster.yml
 su serverdevops
 cat /home/serverdevops/.ssh/id_rsa.pub
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+TaFK4EJQ55wwUCGrQuCvGr5oW40NuIL80sjQE/XZgiNDIoL/Lgn6XOrTGN6n8MhMJd9Q5qNrELV6tSTYdPm82A1Xishq29dkovrRNLohBm2grxRaqM37TtsKDUKPRe0VxPtPL9WyD29xgKWHZFSbpnkmPtdYLcm6f7UOFCEHNYG4Qtf/Cj8J4Ji57BJWCjCLFs9K07WfmnHVZs9lRUrVB03woh2GzkqZvliMjN13nQagPI/sHqj6/VAnmlUDbJvBsnnJvyihSonJQVLZv3VwbN6BrgfOEnGZUdnuaQmYR5z76XG7+EtBe/lOGYGyBe2xZ1YY/MMeqDOBF92Wu2pX ansible-generated on rancher-node-1" >> ~/.ssh/authorized_keys
-ssh serverdevops@10.0.0.2
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCr9aVw7RfNmRfcnE99B+lhKqtsKJTPtshlen/gPh9Ph6Zdk5BKCgDz3A6X1eSlFiyFPwuu5pCiaBjddsqZbngAQ2LGWkYhAEkVdV5MD+YMWz9XMVkauEmAayTLC3PsPDbiL54QUF6/+ejEhXUHU6b5KxahC7K3QXf5Nb/FHPHCkj9rYDadbdfCj/wIzg4QDgfWKsrFyblW1J7bRniw/oXdTPqlKRGsn7rZ9d4mYNnTe2he11aKZwndPUGmEcWmPL8h+hmzwMhuZj+6ELZf9vGNIaee+5QdpgOI2DBnkKGOyopDWZZjSYKxjkoN3G2id2q9aLx6/Nv+fvS+IpK33g3h ansible-generated on rancher-node-1" >> ~/.ssh/authorized_keys
+ssh serverdevops@10.0.0.3 # tes ssh
 ```
 
 ```
 cd /home/serverdevops/
-nano cluster.yml
+nano cluster.yml # sesuaikan IP
 rke up --config cluster.yml
 INFO[0176] Finished building Kubernetes cluster successfully
 export KUBECONFIG=$HOME/kube_config_cluster.yml
@@ -57,26 +57,27 @@ kubectl -n cattle-system get deploy rancher -w
 # Add Worker Node | RKE v1.6.1 | Rancher 2.9 | upgrade Kubernetes v1.29.7 to v1.30.3
 
 ```
-```
 instance_internal_ips = [
-  "10.0.0.2",
   "10.0.0.3",
+  "10.0.0.2",
 ]
 instance_ips = [
+  "34.45.189.254",
   "34.68.131.157",
-  "104.155.187.17",
 ]
 ```
-ssh -i rancher-multinode/rancher-key.pem rancher@104.155.187.17
+
+```
+ssh -i rancher-multinode/rancher-key.pem rancher@34.68.131.157
 sudo su
 su serverdevops
 cat /home/serverdevops/.ssh/id_rsa.pub
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDX5NmrF5N1zRrdCB2F0uOfh3BUEXxeKXnDhlVKny4uUrIVh7tQgEas420YgbLuoLnPgx8m2/h9XZTzBwlu3gmG1N72Volsxvim95lL9oBwhMO5KgtYH6TQJ1rYNb4z+UGvT39p6LBXhx2QdkqXW8P6U2dpP6iHB6a4x8Lq4irTfY/2zDP8KJSPRqudwc7PLtSs4E9JUZoRexEW2v+ZdP4n28HugBIRYQTcmkC8zRDdS87hs4SKawMM0kL3rvmwnvmSFlOlrjQrh6kDUzsmhSCPMyt6NBKTN/mh51I5pXQAOvXOzrOHa3INrjy4UGinDlt9geRCJbBikdN7vL0HT+v5 ansible-generated on rancher-node-2" >> ~/.ssh/authorized_keys
-ssh serverdevops@10.0.0.2
-ssh serverdevops@10.0.0.3
+ssh serverdevops@10.0.0.3 # node 1
+ssh serverdevops@10.0.0.2 # node 2
 rke config --list-version --all #cek kubernetes version
 cd /home/serverdevops/
-nano cluster.yml #Add IP Node
+nano cluster.yml #Add IP Node 2
 rke up --config cluster.yml 
 ```
 

@@ -75,7 +75,7 @@ resource "google_compute_instance" "vm_instance" {
 
       provisioner "file" {
     source      = "nginx-proxy-manager/docker-compose.yml"
-    destination = "/tmp/nginpm/docker-compose.yml"
+    destination = "/tmp/docker-compose.yml.nginpm"
 
     connection {
       type        = "ssh"
