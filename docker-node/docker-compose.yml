@@ -14,3 +14,10 @@ services:
       - ./config-gitlab:/etc/gitlab
       - ./logs-gitlab:/var/log/gitlab
       - ./data-gitlab:/var/opt/gitlab
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf

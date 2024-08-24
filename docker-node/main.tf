@@ -74,8 +74,8 @@ resource "google_compute_instance" "vm_instance" {
   }
 
       provisioner "file" {
-    source      = "nginx-proxy-manager/docker-compose.yml"
-    destination = "/tmp/docker-compose.yml.nginpm"
+    source      = "nginx.conf"
+    destination = "/tmp/nginx.conf"
 
     connection {
       type        = "ssh"
@@ -89,7 +89,9 @@ resource "google_compute_instance" "vm_instance" {
     inline = [
       "sudo apt-get update",
       "sudo apt-get install -y curl git ansible",
-      "sudo ansible-playbook /tmp/install.yaml"
+      "sudo ansible-playbook /tmp/install.yaml",
+      "cd /tmp",
+      "docker compose up -d"
     ]
 
     connection {
