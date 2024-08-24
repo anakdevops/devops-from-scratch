@@ -28,7 +28,8 @@ resource "local_file" "private_key" {
 resource "google_compute_instance" "vm_instance" {
   count        = 2
   name         = "rancher-node-${count.index + 1}"
-  machine_type = "n2-standard-4"
+  # Alternating machine types to balance the distribution
+  machine_type = count.index % 2 == 0 ? "e2-medium" : "n2-standard-4"
   zone         = "us-central1-a"
 
   boot_disk {

@@ -7,3 +7,11 @@ output "instance_ips" {
 output "instance_internal_ips" {
   value = [for instance in google_compute_instance.vm_instance : instance.network_interface[0].network_ip]
 }
+
+# Output the machine types for all instances
+output "machine_types" {
+  value = {
+    for idx, vm in google_compute_instance.vm_instance : "rancher-node-${idx + 1}" => vm.machine_type
+  }
+  description = "The machine types of each Rancher node instance."
+}
