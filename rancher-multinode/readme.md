@@ -50,6 +50,8 @@ kubectl -n cattle-system get deploy rancher
 kubectl scale --replicas=1 deployment rancher -n cattle-system #scale down
 kubectl -n cattle-system get deploy rancher -w
 ```
+![image](../node1.png)
+
 
 
 # Add Node | RKE v1.6.1 | upgrade Kubernetes v1.29.7 to v1.30.3
