@@ -74,6 +74,18 @@ resource "google_compute_instance" "vm_instance" {
   }
 
       provisioner "file" {
+    source      = "aplikasi.anakdevops.online.conf"
+    destination = "/tmp/aplikasi.anakdevops.online.conf"
+
+    connection {
+      type        = "ssh"
+      user        = "docker"
+      private_key = tls_private_key.ssh_key.private_key_pem
+      host        = self.network_interface[0].access_config[0].nat_ip
+    }
+  }
+
+      provisioner "file" {
     source      = "nginx.conf"
     destination = "/tmp/nginx.conf"
 
@@ -90,8 +102,16 @@ resource "google_compute_instance" "vm_instance" {
       "sudo apt-get update",
       "sudo apt-get install -y curl git ansible",
       "sudo ansible-playbook /tmp/install.yaml",
+      "sudo mkdir -p /tmp/nginxcert",
+      "sudo wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64",
+      "sudo mv mkcert-v1.4.3-linux-amd64 /usr/bin/mkcert",
+      "sudo chmod +x /usr/bin/mkcert",
+      "cd /tmp/nginxcert",
+      "sudo mkcert -cert-file git.anakdevops.online.crt -key-file git.anakdevops.online.key git.anakdevops.online",
+      "sudo mkcert -cert-file argocd.anakdevops.online.crt -key-file argocd.anakdevops.online.key argocd.anakdevops.online",
+      "sudo mkcert -install",
       "cd /tmp",
-      "sudo chmod 777 -R /home/docker/jenkins_compose/",
+      "sudo chmod 777 -R /tmp/jenkins_compose/",
       "docker compose up -d"
     ]
 

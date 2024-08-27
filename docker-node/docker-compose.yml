@@ -9,6 +9,7 @@ services:
         gitlab_rails['gitlab_shell_ssh_port'] = 223
     ports:
       - '8081:80'  # Expose GitLab on port 80
+      - '8443:443'
       - '223:22'  # SSH port
     volumes:
       - ./config-gitlab:/etc/gitlab
@@ -23,11 +24,13 @@ services:
     ports:
       - '8080:8080'  # Jenkins listens on port 8080 by default
     volumes:
-      - ./jenkins_home:/var/jenkins_home
+      - /tmp/jenkins_compose:/var/jenkins_home
   nginx:
     image: nginx:latest
     container_name: nginx-proxy
     ports:
       - "80:80"
+      - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /tmp/aplikasi.anakdevops.online.conf:/etc/nginx/nginx.conf
+      - /tmp/nginxcert:/etc/nginx/certs
