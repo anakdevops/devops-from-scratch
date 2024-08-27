@@ -1,19 +1,11 @@
 # Output the public IPs of all instances
-output "instance_public_ips" {
-  value = [
-    for instance in google_compute_instance.vm_instance : 
-    instance.network_interface[0].access_config[0].nat_ip
-  ]
-  description = "The public IP addresses of all Rancher nodes."
+output "instance_ips" {
+  value = [for instance in google_compute_instance.vm_instance : instance.network_interface[0].access_config[0].nat_ip]
 }
 
 # Output the internal IPs of all instances
-output "instance_private_ips" {
-  value = [
-    for instance in google_compute_instance.vm_instance : 
-    instance.network_interface[0].network_ip
-  ]
-  description = "The internal IP addresses of all Rancher nodes."
+output "instance_internal_ips" {
+  value = [for instance in google_compute_instance.vm_instance : instance.network_interface[0].network_ip]
 }
 
 # Output the machine types for all instances

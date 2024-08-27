@@ -111,8 +111,10 @@ resource "google_compute_instance" "vm_instance" {
       "sudo mkcert -cert-file argocd.anakdevops.online.crt -key-file argocd.anakdevops.online.key argocd.anakdevops.online",
       "sudo mkcert -install",
       "cd /tmp",
-      "sudo chmod 777 -R /tmp/jenkins_compose/",
-      "docker compose up -d"
+      "docker compose up -d",
+      "sudo chmod 777 /tmp/jenkins_compose/",
+      "sudo docker restart jenkins"
+
     ]
 
     connection {
